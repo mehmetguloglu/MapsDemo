@@ -8,8 +8,9 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="LocationScreen" component={LocationScreen} />
+        <Tab.Screen name="SavedLocations" component={LocationScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

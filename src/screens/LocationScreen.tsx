@@ -5,7 +5,7 @@ import MapView from 'react-native-maps';
 const LocationScreen = () => {
   return (
     <View style={{flex: 1}}>
-      <MapView style={{...StyleSheet.absoluteFillObject}} />
+      <MapView provider="google" style={{...StyleSheet.absoluteFillObject}} />
     </View>
   );
 };
