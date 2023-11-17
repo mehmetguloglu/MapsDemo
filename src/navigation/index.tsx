@@ -1,16 +1,34 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import LocationScreen from '../screens/LocationScreen';
+import AddLocationScreen from '../screens/AddLocationScreen';
+import SavedLocationsScreen from '../screens/SavedLocationsScreen';
 
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen name="LocationScreen" component={LocationScreen} />
-        <Tab.Screen name="SavedLocations" component={LocationScreen} />
+      <Tab.Navigator
+        initialRouteName="SavedLocations"
+        screenOptions={{headerShown: false}}>
+        <Tab.Screen
+          name="AddLocationScreen"
+          component={AddLocationScreen}
+          options={{
+            tabBarLabel: 'Konum Ekle',
+          }}
+        />
+        <Tab.Screen
+          name="SavedLocations"
+          component={SavedLocationsScreen}
+          options={{
+            tabBarLabel: 'Konumlarım',
+            headerShown: true,
+            headerTitle: 'Konumlarım',
+            headerTitleAlign: 'center',
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
