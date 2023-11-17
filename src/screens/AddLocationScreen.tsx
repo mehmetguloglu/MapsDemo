@@ -1,31 +1,71 @@
-import {SafeAreaView} from 'react-native';
-import React, {useState} from 'react';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import React, {useMemo, useState} from 'react';
 import MapView, {LatLng, Marker} from 'react-native-maps';
-import {Stack, Text} from 'native-base';
 import {useAppSelector, useAppDispatch} from '../bussiness/hooks';
 import {setLocations} from '../bussiness/reducers/mapsReducer';
 import Colors from '../components/addLocation/Colors';
 import AddInput from '../components/addLocation/AddInput';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import Header from '../components/addLocation/Header';
 
-const LocationScreen = () => {
+const AddLocationScreen = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const params = route.params as any;
   const {locations} = useAppSelector(state => state.mapsReducer);
+
   const [coordinate, setCoordinate] = useState<LatLng | null>(null);
   const [locationName, setLocationName] = useState<string>('');
   const [color, setColor] = useState('red');
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  useMemo(() => {
+    if (params?.editName) {
+      const {
+        editName,
+        editCoordinate,
+        editColor,
+        index,
+      }: {
+        editName: string;
+        editCoordinate: LatLng;
+        editColor: string;
+        index: number;
+      } = params;
+      setCoordinate(editCoordinate);
+      setLocationName(editName);
+      setColor(editColor);
+      setEditIndex(index);
+    }
+  }, [params]);
+
   const _handlePress = () => {
-    dispatch(
-      setLocations([
-        ...locations,
-        {name: locationName, coordinate: coordinate, color: color},
-      ]),
-    );
+    if (editIndex != null) {
+      let editLocations = [...locations];
+      editLocations.splice(editIndex, 1);
+      dispatch(
+        setLocations([
+          {name: locationName, coordinate: coordinate, color: color},
+          ...editLocations,
+        ]),
+      );
+      navigation.navigate('SavedLocationsScreen');
+    } else {
+      dispatch(
+        setLocations([
+          {name: locationName, coordinate: coordinate, color: color},
+          ...locations,
+        ]),
+      );
+    }
+
     setCoordinate(null);
     setLocationName('');
     setColor('red');
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={styles.safeAreaView}>
       {coordinate ? (
         <>
           <AddInput
@@ -36,24 +76,13 @@ const LocationScreen = () => {
           <Colors setColor={setColor} />
         </>
       ) : (
-        <Stack
-          width={'100%'}
-          alignItems={'center'}
-          zIndex={999}
-          top={6}
-          position={'absolute'}>
-          <Stack bgColor={'white'} px={2} py={1} opacity={1} borderRadius={10}>
-            <Text fontSize={16} fontWeight={'700'} color={'black'}>
-              Konum Ekle
-            </Text>
-          </Stack>
-        </Stack>
+        <Header />
       )}
       <MapView
-        minZoomLevel={5}
+        minZoomLevel={3}
         onPress={e => setCoordinate(e.nativeEvent.coordinate)}
         provider="google"
-        style={{flex: 1}}>
+        style={styles.mapView}>
         {coordinate != null ? (
           <Marker coordinate={coordinate} pinColor={color} />
         ) : null}
@@ -62,4 +91,14 @@ const LocationScreen = () => {
   );
 };
 
-export default LocationScreen;
+export default AddLocationScreen;
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  mapView: {
+    flex: 1,
+  },
+});

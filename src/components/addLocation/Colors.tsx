@@ -11,6 +11,7 @@ const Colors = ({
     <Stack pb={3} mx={4} justifyContent={'space-between'} direction={'row'}>
       {colors.map(item => (
         <Button
+          key={item}
           onPress={() => setColor(item)}
           width={30}
           height={30}

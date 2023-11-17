@@ -1,11 +1,34 @@
 import React, {useState} from 'react';
 import {ChevronRight, MapPin} from 'lucide-react-native';
 import {Stack, Text, Pressable} from 'native-base';
+import {LatLng} from 'react-native-maps';
+import {useNavigation} from '@react-navigation/native';
 
-const LocationItem = ({name, coordinate, color}) => {
+const LocationItem = ({
+  name,
+  coordinate,
+  color,
+  index,
+}: {
+  name: string;
+  coordinate: LatLng;
+  color: string;
+  index: Number;
+}) => {
   const [showCoordinate, setShowCoordinate] = useState<boolean>(false);
 
+  const navigation = useNavigation();
+
   const _handleShowCoordinate = () => setShowCoordinate(!showCoordinate);
+
+  const _handleEditCoodinate = () => {
+    navigation.navigate('AddLocationScreen', {
+      editName: name,
+      editCoordinate: coordinate,
+      editColor: color,
+      index: index,
+    });
+  };
 
   return (
     <Stack
@@ -30,7 +53,7 @@ const LocationItem = ({name, coordinate, color}) => {
           ) : null}
         </Stack>
       </Stack>
-      <Pressable>
+      <Pressable onPress={_handleEditCoodinate}>
         <ChevronRight />
       </Pressable>
     </Stack>

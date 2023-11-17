@@ -10,7 +10,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="SavedLocations"
+        initialRouteName="SavedLocationsScreen"
         screenOptions={{headerShown: false}}>
         <Tab.Screen
           name="AddLocationScreen"
@@ -20,7 +20,7 @@ const Navigation = () => {
           }}
         />
         <Tab.Screen
-          name="SavedLocations"
+          name="SavedLocationsScreen"
           component={SavedLocationsScreen}
           options={{
             tabBarLabel: 'Konumlarım',

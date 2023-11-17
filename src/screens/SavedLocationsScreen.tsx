@@ -9,11 +9,13 @@ const SavedLocationsScreen = () => {
   return (
     <FlatList
       data={locations}
-      renderItem={({item}) => (
+      keyExtractor={({name}) => name}
+      renderItem={({item, index}) => (
         <LocationItem
           name={item.name}
           coordinate={item.coordinate}
           color={item.color}
+          index={index}
         />
       )}
     />
