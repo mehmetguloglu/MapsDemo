@@ -14,7 +14,7 @@ const SavedLocationsScreen = () => {
         <LocationItem
           name={item.name}
           coordinate={item.coordinate}
-          color={item.color}
+          pinColor={item.pinColor}
           index={index}
         />
       )}

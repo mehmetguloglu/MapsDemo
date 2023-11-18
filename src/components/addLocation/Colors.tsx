@@ -1,7 +1,15 @@
 import React from 'react';
-import {Button, Stack} from 'native-base';
+import {Pressable, Stack} from 'native-base';
 
-const colors = ['blue', 'green', 'red', 'yellow', 'orange', 'purple', 'gray'];
+const colors = [
+  'red',
+  'tomato',
+  'orange',
+  'wheat',
+  'linen',
+  'green',
+  'turquoise',
+];
 const Colors = ({
   setColor,
 }: {
@@ -10,13 +18,15 @@ const Colors = ({
   return (
     <Stack pb={3} mx={4} justifyContent={'space-between'} direction={'row'}>
       {colors.map(item => (
-        <Button
+        <Pressable
           key={item}
-          onPress={() => setColor(item)}
+          onPress={() => {
+            setColor(item);
+          }}
           width={30}
           height={30}
           borderRadius={20}
-          colorScheme={item}
+          style={{backgroundColor: item}}
         />
       ))}
     </Stack>

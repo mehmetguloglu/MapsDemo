@@ -7,17 +7,17 @@ import {useNavigation} from '@react-navigation/native';
 const LocationItem = ({
   name,
   coordinate,
-  color,
+  pinColor,
   index,
 }: {
   name: string;
   coordinate: LatLng;
-  color: string;
-  index: Number;
+  pinColor: string;
+  index: number;
 }) => {
   const [showCoordinate, setShowCoordinate] = useState<boolean>(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const _handleShowCoordinate = () => setShowCoordinate(!showCoordinate);
 
@@ -25,9 +25,9 @@ const LocationItem = ({
     navigation.navigate('AddLocationScreen', {
       editName: name,
       editCoordinate: coordinate,
-      editColor: color,
+      editColor: pinColor,
       index: index,
-    });
+    } as never);
   };
 
   return (
@@ -40,7 +40,7 @@ const LocationItem = ({
       my={0.5}>
       <Stack alignItems={'center'} direction={'row'}>
         <Pressable p={3} onPress={_handleShowCoordinate}>
-          <MapPin color={color} />
+          <MapPin color={pinColor} />
         </Pressable>
         <Stack>
           <Text fontSize={15} fontWeight={'600'}>
@@ -54,7 +54,7 @@ const LocationItem = ({
         </Stack>
       </Stack>
       <Pressable onPress={_handleEditCoodinate}>
-        <ChevronRight />
+        <ChevronRight color="black" />
       </Pressable>
     </Stack>
   );

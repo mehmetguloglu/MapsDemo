@@ -11,7 +11,7 @@ const AddInput = ({
   onPress: () => void;
 }) => {
   return (
-    <Stack px={15} py={3} direction={'row'}>
+    <Stack flex={1} px={1} py={3} direction={'row'}>
       <Input
         onChangeText={e => setLocationName(e)}
         value={locationName}
@@ -23,7 +23,7 @@ const AddInput = ({
       <Button
         disabled={locationName === ''}
         backgroundColor={locationName === '' ? 'gray.400' : 'blue.500'}
-        ml={2}
+        ml={1}
         size={'sm'}
         onPress={onPress}>
         <Text bold color={'white'}>

@@ -1,8 +1,8 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {LatLng} from 'react-native-maps';
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import ILocation from '../types/ILocation';
 
 interface IMapReducer {
-  locations: {name: string; coordinate: LatLng; color: string}[];
+  locations: ILocation[];
 }
 
 const mapsReducer = createSlice({
@@ -11,7 +11,7 @@ const mapsReducer = createSlice({
     locations: [],
   } as IMapReducer,
   reducers: {
-    setLocations(state, action) {
+    setLocations(state, action: PayloadAction<ILocation[]>) {
       state.locations = action.payload;
     },
   },
