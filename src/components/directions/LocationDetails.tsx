@@ -10,6 +10,8 @@ const LocationDetails = ({
   selectedLocation: ILocation;
   onGetRoute: (item: ILocation) => void;
 }) => {
+  const {name, coordinate, pinColor} = selectedLocation;
+  const {latitude, longitude} = coordinate;
   return (
     <Stack
       width={'100%'}
@@ -28,24 +30,23 @@ const LocationDetails = ({
         justifyContent={'space-between'}>
         <Stack>
           <Text fontSize={16} fontWeight={'600'}>
-            {selectedLocation.name}
+            {name}
           </Text>
           <Text fontSize={11}>
-            {selectedLocation.coordinate.latitude},
-            {selectedLocation.coordinate.longitude}
+            {latitude},{longitude}
           </Text>
         </Stack>
         <Pressable
           onPress={() => onGetRoute(selectedLocation)}
           bgColor={'white'}
-          borderColor={selectedLocation.pinColor}
+          borderColor={pinColor}
           borderRadius={10}
           borderWidth={1}
           p={3}
           alignItems={'center'}
           justifyContent={'center'}
           ml={2}>
-          <MapPin color={selectedLocation.pinColor} />
+          <MapPin color={pinColor} />
           <Text>Rota</Text>
         </Pressable>
       </Stack>

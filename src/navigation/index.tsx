@@ -6,8 +6,9 @@ import SavedLocationsScreen from '../screens/SavedLocationsScreen';
 import DirectionsScreen from '../screens/DirectionsScreen';
 import HeaderRight from '../components/locations/HeaderRight';
 import {BadgePlus, MapPin, MapPinned} from 'lucide-react-native';
+import {RootTabParamList} from '../bussiness/types/RootTabParamList';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const Navigation = () => {
   return (

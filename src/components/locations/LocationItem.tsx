@@ -3,6 +3,7 @@ import {ChevronRight, MapPin} from 'lucide-react-native';
 import {Stack, Text, Pressable} from 'native-base';
 import {LatLng} from 'react-native-maps';
 import {useNavigation} from '@react-navigation/native';
+import {AddLocationScreenNavigationProps} from '../../bussiness/types/RootTabParamList';
 
 const LocationItem = ({
   name,
@@ -17,7 +18,7 @@ const LocationItem = ({
 }) => {
   const [showCoordinate, setShowCoordinate] = useState<boolean>(false);
 
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<AddLocationScreenNavigationProps>();
 
   const _handleShowCoordinate = () => setShowCoordinate(!showCoordinate);
 

@@ -2,9 +2,10 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Pressable} from 'native-base';
 import {MapPinned} from 'lucide-react-native';
+import {DirectionsScreenNavigationProps} from '../../bussiness/types/RootTabParamList';
 
 const HeaderRight = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<DirectionsScreenNavigationProps>();
 
   const _handleNavigateRoutesPress = () => {
     navigation.navigate('DirectionsScreen');

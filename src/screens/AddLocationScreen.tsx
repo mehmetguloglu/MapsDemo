@@ -11,6 +11,10 @@ import {Button, Stack, Text} from 'native-base';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
+import {
+  AddLocationScreenNavigationProps,
+  AddLocationScreenRouteProp,
+} from '../bussiness/types/RootTabParamList';
 
 const screen = Dimensions.get('window');
 
@@ -20,9 +24,9 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const AddLocationScreen = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<any>();
-  const route = useRoute();
-  const params = route.params as any;
+  const navigation = useNavigation<AddLocationScreenNavigationProps>();
+  const route = useRoute<AddLocationScreenRouteProp>();
+  const params = route.params;
   const {locations} = useAppSelector(state => state.mapsReducer);
 
   const [coordinate, setCoordinate] = useState<LatLng | undefined>(undefined);
@@ -59,6 +63,25 @@ const AddLocationScreen = () => {
       }
     }
   }, [params]);
+
+  const initialRegion = useMemo(() => {
+    if (editIndex != null && coordinate) {
+      return {
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      };
+    } else if (currentLocation) {
+      return {
+        latitude: currentLocation?.coords.latitude,
+        longitude: currentLocation?.coords.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      };
+    }
+    return undefined;
+  }, [coordinate, currentLocation, editIndex]);
 
   const _handlePress = () => {
     if (coordinate) {
@@ -125,23 +148,7 @@ const AddLocationScreen = () => {
       )}
       <MapView
         ref={mapRef}
-        initialRegion={
-          editIndex != null && coordinate
-            ? {
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-              }
-            : currentLocation
-            ? {
-                latitude: currentLocation?.coords.latitude,
-                longitude: currentLocation?.coords.longitude,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-              }
-            : undefined
-        }
+        initialRegion={initialRegion}
         maxZoomLevel={15}
         showsMyLocationButton={true}
         showsUserLocation={true}
